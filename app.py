@@ -1,14 +1,15 @@
-import streamlit as st
-import pandas as pd
+monthly = pd.read_excel(
+    "Britannia_Financial_Intelligence_Phase2.xlsx",
+    sheet_name="Monthly_Report"
+)
 
-FILE = "Britannia_Financial_Intelligence_Phase2.xlsx"
+# Remove the last two bad rows
+monthly = monthly.iloc[:-2]
 
-monthly = pd.read_excel(FILE, sheet_name="Monthly_Report")
+# Reset index
+monthly = monthly.reset_index(drop=True)
 
-monthly = monthly[monthly["Month"].notna()]
-monthly = monthly[monthly["Month"].astype(str).str.contains("2024|2025")]
+latest = monthly.iloc[-1]
 
-st.write(monthly.tail())
-
-st.write("LATEST ROW")
-st.write(monthly.iloc[-1])
+st.write("Latest row being used:")
+st.write(latest)
